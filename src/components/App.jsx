@@ -26,37 +26,44 @@ export class App extends Component {
       return
     };
     this.setState({
-      images: [],
+      // images: [],
       isLoading: true,
       currentSearch: inputForSearch.value,
-      pageNr: 1,
+      // pageNr: 1,
     },
-    ()=> {
-      fetchImages(searchValue, 1).then((resp)=>{
-        this.setState({
-          images: resp,
-          isLoading: false
-        })
-      })
-    }
+    // ()=> {
+    //   fetchImages(searchValue, 1).then((resp)=>{
+    //     this.setState({
+    //       images: resp,
+    //       isLoading: false
+    //     })
+    //   })
+    // }
     );
   };
 
   handleClickMore = () => {
     const { currentSearch, pageNr } = this.state;
-    fetchImages(currentSearch, pageNr + 1).then((resp) => {
       this.setState((prevState) => ({
-        images: [...prevState.images, ...resp],
-        pageNr: prevState.pageNr + 1,
+        // images: [],
+        // currentSearch: currentSearch,
+        isLoading: true,
+        pageNr: pageNr + 1,
       }));
-    });
+    // fetchImages(currentSearch, pageNr + 1).then((resp) => {
+    //   this.setState((prevState) => ({
+    //     images: [...prevState.images, ...resp],
+    //     pageNr: prevState.pageNr + 1,
+    //   }));
+    // });
   };
 
   componentDidUpdate(prevProps, prevState) {
     // console.log(this.state.currentSearch);
     // console.log(prevState.currentSearch);
+    const { currentSearch, pageNr } = this.state;
     
-    if (this.state.currentSearch !== prevState.currentSearch) {
+    if (this.state.currentSearch !== prevState.currentSearch || this.state.pageNr !== prevState.pageNr) {
       this.setState({ isLoading: true });
       fetchImages(this.state.currentSearch, 1).then((response)=>{
         console.log(response.length);
@@ -69,9 +76,9 @@ export class App extends Component {
         };
 
         this.setState({
-          images: response,
+          images: [...this.state.images, ...response],
           isLoading: false,
-          pageNr: 1,
+          // pageNr: pageNr+1,
         });        
       })
     };
