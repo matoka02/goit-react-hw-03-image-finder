@@ -27,8 +27,10 @@ export class App extends Component {
       return
     };
     this.setState({
+      images: [],
       isLoading: true,
       currentSearch: inputForSearch.value,
+      pageNr: 1,
     });
   };
 
