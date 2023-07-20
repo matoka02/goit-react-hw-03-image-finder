@@ -26,59 +26,52 @@ export class App extends Component {
       return
     };
     this.setState({
-      // images: [],
       isLoading: true,
       currentSearch: inputForSearch.value,
-      // pageNr: 1,
-    },
-    // ()=> {
-    //   fetchImages(searchValue, 1).then((resp)=>{
-    //     this.setState({
-    //       images: resp,
-    //       isLoading: false
-    //     })
-    //   })
-    // }
-    );
+    });
   };
 
   handleClickMore = () => {
-    const { currentSearch, pageNr } = this.state;
+    const { currentSearch } = this.state;
       this.setState((prevState) => ({
-        // images: [],
-        // currentSearch: currentSearch,
+        currentSearch: currentSearch,
         isLoading: true,
-        pageNr: pageNr + 1,
+        pageNr: prevState.pageNr + 1,
       }));
-    // fetchImages(currentSearch, pageNr + 1).then((resp) => {
-    //   this.setState((prevState) => ({
-    //     images: [...prevState.images, ...resp],
-    //     pageNr: prevState.pageNr + 1,
-    //   }));
-    // });
   };
 
   componentDidUpdate(prevProps, prevState) {
     // console.log(this.state.currentSearch);
     // console.log(prevState.currentSearch);
-    const { currentSearch, pageNr } = this.state;
+    const prevSearch = prevState.currentSearch;
+    const nextSearch = this.state.currentSearch;    
+    const prevPage = prevState.pageNr;
+    const nextPage = this.state.pageNr;    
+
+    if (nextPage > 1) {
+      window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: "smooth",
+      });
+    };
     
-    if (this.state.currentSearch !== prevState.currentSearch || this.state.pageNr !== prevState.pageNr) {
+    if (nextSearch !== prevSearch || nextPage !== prevPage) {      
       this.setState({ isLoading: true });
-      fetchImages(this.state.currentSearch, 1).then((response)=>{
+      fetchImages(nextSearch, nextPage).then((response)=>{
         console.log(response.length);
 
         if (response.length === 0) {
           alert('No images on request');
-          // console.log(this.state);
-          // this.setState({currentSearch: ''})
+          this.setState({
+            isLoading: false,
+          })
           return
-        };
+        }; 
 
         this.setState({
-          images: [...this.state.images, ...response],
+          images: [...response],
           isLoading: false,
-          // pageNr: pageNr+1,
+          pageNr: nextPage,
         });        
       })
     };
@@ -114,11 +107,11 @@ export class App extends Component {
   // };  
 
 
-  handleImageClick = evt => {
+  handleImageClick = ({target}) => {
     this.setState({
       modalOpen: true,
-      modalAlt: evt.target.alt,
-      modalImg: evt.target.name,
+      modalAlt: target.alt,
+      modalImg: target.name,
     });
   };
 
