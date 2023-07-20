@@ -4,7 +4,8 @@ import ImageGallery from './ImageGallery/ImageGallery';
 import Loader from './Loader/Loader';
 import { Modal } from './Modal/Modal';
 import Searchbar from './Searchbar/Searchbar';
-import fetchImages from '../services/fetchImages';
+// import fetchImages from '../services/fetchImages';
+import {fetchImages, PER_PAGE} from '../services/fetchImages';
 
 export class App extends Component {
   state = {
@@ -143,7 +144,7 @@ export class App extends Component {
               />
           )}
 
-        {((this.state.images.length > 0)&&(!this.state.isLoading))&& <Button onClick={this.handleClickMore} />}
+        {(!(this.state.images.length < PER_PAGE)&&(this.state.images.length > 0)&&(!this.state.isLoading))&& <Button onClick={this.handleClickMore} />}
         
         {/* {this.state.images.length > 0 ? (
           <Button onClick={this.handleClickMore} />

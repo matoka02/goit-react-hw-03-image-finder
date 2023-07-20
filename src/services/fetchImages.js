@@ -47,4 +47,5 @@ const  fetchImages = async (inputValue, pageNr) => {
 
 };
 
-export default fetchImages;
+// export default fetchImages;
+export {fetchImages, PER_PAGE};
