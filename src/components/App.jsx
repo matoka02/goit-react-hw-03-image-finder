@@ -150,12 +150,11 @@ export class App extends Component {
               />
           )}
 
-        {this.state.images.length > 0 ? (
+        {((this.state.images.length > 0)&&(!this.state.isLoading))&& <Button onClick={this.handleClickMore} />}
+        
+        {/* {this.state.images.length > 0 ? (
           <Button onClick={this.handleClickMore} />
-        ) : null}
-
-{/* {this.state.images.length < 12 && <Button onClick={this.handleClickMore} />} */}
-
+        ) : null} */}
 
         {this.state.isLoading && <Loader />}
 
