@@ -28,17 +28,13 @@ export class App extends Component {
     };
     this.setState({
       images: [],
-      isLoading: true,
       currentSearch: inputForSearch.value,
       pageNr: 1,
     });
   };
 
   handleClickMore = () => {
-    const { currentSearch } = this.state;
       this.setState((prevState) => ({
-        currentSearch: currentSearch,
-        isLoading: true,
         pageNr: prevState.pageNr + 1,
       }));
   };
