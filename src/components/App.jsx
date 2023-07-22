@@ -68,7 +68,7 @@ export class App extends Component {
         }; 
 
         this.setState({
-          images: [...response],
+          images: [...this.state.images, ...response],
           isLoading: false,
           pageNr: nextPage,
         });        
